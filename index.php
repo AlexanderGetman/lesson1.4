@@ -1,17 +1,19 @@
 <?php
-$json = '{"coord":{"lon":131.89,"lat":43.12},"weather":[{"id":801,"main":"Clouds","description":"few clouds","icon":"02n"}],"base":"stations","main":{"temp":287.15,"pressure":1016,"humidity":71,"temp_min":287.15,"temp_max":287.15},"visibility":10000,"wind":{"speed":3,"deg":210},"clouds":{"all":20},"dt":1530961200,"sys":{"type":1,"id":7251,"message":0.0221,"country":"RU","sunrise":1530906018,"sunset":1530960848},"id":2013348,"name":"Vladivostok","cod":200}';
+$link = 'http://api.openweathermap.org/data/2.5/weather';
+$apiKey = 'a716ba74a7dc0b2274e512719f0ea72f';
+$city = 'Vladivostok,ru';
+$apiURL = "{$link}?q={$city}&appid={$apiKey}";
 
-$weather = json_decode($json, true);
+$json = file_get_contents($apiURL) or exit('Не удалось получить данные');
+$weather = json_decode($json, true) or exit('Ошибка декодирования json');
+
+function checkData($weather) {
+    if (empty($weather)) { return 'не удалось получить данные'; }
+        return $weather;}
+
 $celsius = 273.15;
 $pathx = "http://openweathermap.org/img/w/";
 $file = $weather['weather'][0]['icon'];
-
-
-//echo '<h1>' . 'Current weather in ' . $weather['name'] . '</h1>'; echo '</br>';
-//echo 'The temperature is ' . ((int)$weather['main']['temp']-$celsius) . ' °C'; echo '</br>';
-//echo 'Weather condition: ' . '<b>' . $weather['weather'][0]['description'] . '</b>' . '<img src="'.$pathx.$file.'.png">'; echo '</br>';
-//echo 'Speed of wind is ' . $weather['wind']['speed'] . ' m/s'; echo '</br>';
-//echo 'Humidity ' . $weather['main']['humidity'] . ' %'; echo '</br>';
 ?>
 
 <html>
@@ -24,7 +26,6 @@ $file = $weather['weather'][0]['icon'];
         table tr {
             text-align: center;
         }
-
         table td img {
             vertical-align: middle;
         }
