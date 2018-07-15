@@ -9,7 +9,7 @@ $weather = json_decode($json, true) or exit('Ошибка декодирован
 
 function checkData($weather) {
     if (empty($weather)) { return 'не удалось получить данные'; }
-        return $weather;}
+    return $weather;}
 
 $celsius = 273.15;
 $pathx = "http://openweathermap.org/img/w/";
@@ -42,11 +42,11 @@ $file = $weather['weather'][0]['icon'];
         <th>Атмосферное давление, мбар</th>
     </tr>
     <tr>
-        <td><?php echo '<img src="'.$pathx.$file.'.png">' . '<b>' . $weather['weather'][0]['description'] . '</b>'?></td>
-        <td><?php echo ((int)$weather['main']['temp']-$celsius)?></td>
-        <td><?php echo $weather['wind']['speed']?></td>
-        <td><?php echo $weather['main']['humidity']?></td>
-        <td><?php echo $weather['main']['pressure']?></td>
+        <td><?php echo '<img src="'.$pathx.$file.'.png">' . '<b>' . checkData($weather['weather'][0]['description']) . '</b>'?></td>
+        <td><?php echo checkData(((int)$weather['main']['temp']-$celsius))?></td>
+        <td><?php echo checkData($weather['wind']['speed']) ?></td>
+        <td><?php echo checkData($weather['main']['humidity'])?></td>
+        <td><?php echo checkData($weather['main']['pressure'])?></td>
     </tr>
 </table>
 </body>
